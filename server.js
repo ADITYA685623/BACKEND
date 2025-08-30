@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const { Perplexity } = require('@ai-sdk/perplexity');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const bcrypt = require('bcrypt'); // Added bcrypt
 
 dotenv.config();
 
@@ -69,8 +70,8 @@ app.post('/signin', async (req, res) => {
     try {
         const db = mongoClient.db('FINTECH');
         const usersCollection = db.collection('CREDENTIALS');
-        const user = await usersCollection.findOne({ 'USERNAME': username, 'PASSWORD': password });
-        if (user) {
+        const user = await usersCollection.findOne({ 'USERNAME': username }); // Find user by username
+        if (user && await bcrypt.compare(password, user.PASSWORD)) { // Compare hashed password
             res.json({ success: true, message: 'Sign-in successful' });
         } else {
             res.status(401).json({ success: false, message: 'Invalid credentials' });
@@ -90,7 +91,9 @@ app.post('/signup', async (req, res) => {
         if (user) {
             res.json({ success: false, message: 'USER EXISTS' });
         } else {
-            await usersCollection.insertOne({ 'USERNAME': username, 'PASSWORD': password });
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds); // Hash the password
+            await usersCollection.insertOne({ 'USERNAME': username, 'PASSWORD': hashedPassword }); // Store the hashed password
             res.status(201).json({ success: true, message: 'Signup successful' });
         }
     } catch (error) {
