@@ -1,0 +1,29 @@
+{
+  "name": "fintech-ninjas",
+  "version": "1.0.0",
+  "description": "\"# Fintech-Ninjas\" \r \"# Fintech-Ninjas\" \r \"# Fintech-Ninjas\" \r \"# Fintech-Ninjas\"",
+  "homepage": "https://github.com/ADITYA685623/Fintech-Ninjas#readme",
+  "bugs": {
+    "url": "https://github.com/ADITYA685623/Fintech-Ninjas/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ADITYA685623/Fintech-Ninjas.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@ai-sdk/perplexity": "^2.0.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongodb": "^6.19.0",
+    "path": "^0.12.7"
+  }
+}
